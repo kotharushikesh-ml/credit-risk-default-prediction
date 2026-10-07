@@ -3,79 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Risk Default Underwriting System</title>
+    <title>Credit Risk Default Underwriting System | AI Decision Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --border: #334155;
+            --bg: #070a12;
+            --surface: #0e1526;
+            --surface-hover: #131d35;
+            --surface-card: rgba(15, 23, 42, 0.75);
+            --border: #1e293b;
+            --border-glow: rgba(59, 130, 246, 0.3);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent: #10b981;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-green: #10b981;
+            --accent-green-glow: rgba(16, 185, 129, 0.2);
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background: var(--bg); color: var(--text-main); min-height: 100vh; padding: 2rem 1rem; }
-        .container { max-width: 860px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 2rem; }
-        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
-        .header p { color: var(--text-muted); font-size: 1rem; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-        label { font-size: 0.875rem; font-weight: 500; color: #cbd5e1; }
-        input, select { background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 0.65rem 0.85rem; border-radius: 6px; font-size: 0.95rem; }
-        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
-        .btn-submit { display: block; width: 100%; background: var(--primary); color: white; border: none; padding: 0.85rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-        .btn-submit:hover { background: var(--primary-hover); }
-        .meta-links { text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted); }
-        .meta-links a { color: var(--primary); text-decoration: none; margin: 0 0.5rem; }
-        .meta-links a:hover { text-decoration: underline; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2.5rem 1rem 4rem;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.18), transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05), transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.55;
+        }
+
+        /* Preset Switcher Card */
+        .preset-bar {
+            background: var(--surface-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .preset-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-preset {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            padding: 0.45rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-preset:hover {
+            background: #283548;
+            border-color: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-preset.prime:hover { border-color: var(--accent-green); }
+        .btn-preset.subprime:hover { border-color: var(--accent-red); }
+
+        /* Main Form Card */
+        .main-card {
+            background: var(--surface-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.25rem;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.15rem;
+            margin-top: 1.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .section-header:first-of-type { margin-top: 0; }
+
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            font-size: 0.85rem;
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            font-size: 0.83rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        .hint {
+            font-size: 0.72rem;
+            color: #64748b;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        input, select {
+            background: #090e1a;
+            border: 1px solid #1e293b;
+            color: #fff;
+            padding: 0.75rem 0.95rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+            background: #0d1424;
+        }
+
+        /* Live Indicator Chip */
+        .live-preview-bar {
+            background: #090e1a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 0.85rem 1.25rem;
+            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .live-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .live-stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .live-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+            margin-top: 1.25rem;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        /* Footer Meta */
+        .footer-meta {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-meta a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .footer-meta a:hover {
+            color: #60a5fa;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Credit Default Risk Assessment</h1>
-            <p>Machine Learning Underwriting Engine with Explainable SHAP Attribution</p>
+        <!-- Header -->
+        <header class="header">
+            <div class="badge-pill">
+                <span class="pulse-dot"></span>
+                Calibrated XGBoost Model &bull; 75.91% ROC-AUC &bull; 0.5183 GINI
+            </div>
+            <h1>AI Credit Underwriting Engine</h1>
+            <p>Predict retail borrower default probability with calibrated risk bands and FCRA/ECOA-compliant Tree SHAP adverse action explanations.</p>
+        </header>
+
+        <!-- Preset Profiles Switcher -->
+        <div class="preset-bar">
+            <div class="preset-label">
+                <span>⚡ Load Demo Profiles:</span>
+            </div>
+            <div class="preset-buttons">
+                <button type="button" class="btn-preset prime" onclick="loadProfile('prime')">🟢 Prime Borrower</button>
+                <button type="button" class="btn-preset near-prime" onclick="loadProfile('nearprime')">🟡 Near-Prime Borrower</button>
+                <button type="button" class="btn-preset subprime" onclick="loadProfile('subprime')">🔴 Subprime Borrower</button>
+            </div>
         </div>
 
-        <div class="card">
-            <form action="/predict_ui" method="POST">
+        <!-- Underwriting Application Form -->
+        <div class="main-card">
+            <form action="/predict_ui" method="POST" id="underwritingForm">
+                
+                <!-- Section 1: Financial & Loan Terms -->
+                <div class="section-header">
+                    <span class="section-icon">💳</span>
+                    <span class="section-title">Loan & Financial Obligations</span>
+                </div>
+
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="income">Annual Income ($)</label>
-                        <input type="number" id="income" name="income" value="180000" step="1000" required>
+                        <div class="label-row">
+                            <label for="income">Annual Total Income ($)</label>
+                            <span class="hint">AMT_INCOME_TOTAL</span>
+                        </div>
+                        <input type="number" id="income" name="income" value="220000" step="1000" required oninput="updateRatios()">
                     </div>
 
                     <div class="form-group">
-                        <label for="credit">Credit Amount Requested ($)</label>
-                        <input type="number" id="credit" name="credit" value="450000" step="1000" required>
+                        <div class="label-row">
+                            <label for="credit">Credit Amount Requested ($)</label>
+                            <span class="hint">AMT_CREDIT</span>
+                        </div>
+                        <input type="number" id="credit" name="credit" value="450000" step="1000" required oninput="updateRatios()">
                     </div>
 
                     <div class="form-group">
-                        <label for="annuity">Annual Annuity Payment ($)</label>
-                        <input type="number" id="annuity" name="annuity" value="22500" step="500" required>
+                        <div class="label-row">
+                            <label for="annuity">Annual Annuity Payment ($)</label>
+                            <span class="hint">AMT_ANNUITY</span>
+                        </div>
+                        <input type="number" id="annuity" name="annuity" value="22500" step="500" required oninput="updateRatios()">
                     </div>
 
                     <div class="form-group">
-                        <label for="goods_price">Goods / Property Price ($)</label>
+                        <div class="label-row">
+                            <label for="goods_price">Goods / Property Value ($)</label>
+                            <span class="hint">AMT_GOODS_PRICE</span>
+                        </div>
                         <input type="number" id="goods_price" name="goods_price" value="400000" step="1000" required>
                     </div>
+                </div>
 
+                <!-- Live Ratio Indicators -->
+                <div class="live-preview-bar">
+                    <div class="live-stat">
+                        <span class="live-stat-label">Credit-to-Income</span>
+                        <span class="live-stat-value" id="ratioCreditIncome">2.05x</span>
+                    </div>
+                    <div class="live-stat">
+                        <span class="live-stat-label">Annuity-to-Income (DTI)</span>
+                        <span class="live-stat-value" id="ratioDTI">10.23%</span>
+                    </div>
+                    <div class="live-stat">
+                        <span class="live-stat-label">Annuity-to-Credit</span>
+                        <span class="live-stat-value" id="ratioAnnuityCredit">5.00%</span>
+                    </div>
+                </div>
+
+                <!-- Section 2: Borrower Demographics -->
+                <div class="section-header">
+                    <span class="section-icon">👤</span>
+                    <span class="section-title">Borrower Profile & Stability</span>
+                </div>
+
+                <div class="form-grid">
                     <div class="form-group">
-                        <label for="age_years">Applicant Age (Years)</label>
-                        <input type="number" id="age_years" name="age_years" value="38" step="1" required>
+                        <div class="label-row">
+                            <label for="age_years">Borrower Age (Years)</label>
+                            <span class="hint">DAYS_BIRTH</span>
+                        </div>
+                        <input type="number" id="age_years" name="age_years" value="39" step="1" min="18" max="75" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="employed_years">Years in Current Employment</label>
-                        <input type="number" id="employed_years" name="employed_years" value="6" step="0.5" required>
+                        <div class="label-row">
+                            <label for="employed_years">Years at Current Employment</label>
+                            <span class="hint">DAYS_EMPLOYED</span>
+                        </div>
+                        <input type="number" id="employed_years" name="employed_years" value="6.5" step="0.5" min="0" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="gender">Gender</label>
+                        <div class="label-row">
+                            <label for="gender">Gender</label>
+                            <span class="hint">CODE_GENDER</span>
+                        </div>
                         <select id="gender" name="gender">
                             <option value="F">Female</option>
                             <option value="M">Male</option>
@@ -83,7 +469,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="contract_type">Contract Type</label>
+                        <div class="label-row">
+                            <label for="contract_type">Contract Type</label>
+                            <span class="hint">NAME_CONTRACT_TYPE</span>
+                        </div>
                         <select id="contract_type" name="contract_type">
                             <option value="Cash loans">Cash loans</option>
                             <option value="Revolving loans">Revolving loans</option>
@@ -91,9 +480,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="income_type">Income Source</label>
+                        <div class="label-row">
+                            <label for="income_type">Income Source</label>
+                            <span class="hint">NAME_INCOME_TYPE</span>
+                        </div>
                         <select id="income_type" name="income_type">
-                            <option value="Working">Working / Salaried</option>
+                            <option value="Working" selected>Working / Salaried</option>
                             <option value="Commercial associate">Commercial Associate</option>
                             <option value="State servant">State Servant</option>
                             <option value="Pensioner">Pensioner</option>
@@ -101,33 +493,112 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="education">Education Level</label>
+                        <div class="label-row">
+                            <label for="education">Education Level</label>
+                            <span class="hint">NAME_EDUCATION_TYPE</span>
+                        </div>
                         <select id="education" name="education">
-                            <option value="Higher education">Higher education</option>
-                            <option value="Secondary / secondary special" selected>Secondary / Secondary Special</option>
+                            <option value="Higher education" selected>Higher education</option>
+                            <option value="Secondary / secondary special">Secondary / Secondary Special</option>
                             <option value="Incomplete higher">Incomplete higher</option>
                         </select>
                     </div>
+                </div>
 
+                <!-- Section 3: Credit Bureau Ratings -->
+                <div class="section-header">
+                    <span class="section-icon">📊</span>
+                    <span class="section-title">External Bureau Risk Scores</span>
+                </div>
+
+                <div class="form-grid">
                     <div class="form-group">
-                        <label for="ext_source_2">External Bureau Rating 2 (0 to 1)</label>
-                        <input type="number" id="ext_source_2" name="ext_source_2" value="0.55" min="0" max="1" step="0.01">
+                        <div class="label-row">
+                            <label for="ext_source_2">External Bureau Score 2 (0.0 to 1.0)</label>
+                            <span class="hint">EXT_SOURCE_2</span>
+                        </div>
+                        <input type="number" id="ext_source_2" name="ext_source_2" value="0.58" min="0" max="1" step="0.01">
                     </div>
 
                     <div class="form-group">
-                        <label for="ext_source_3">External Bureau Rating 3 (0 to 1)</label>
-                        <input type="number" id="ext_source_3" name="ext_source_3" value="0.50" min="0" max="1" step="0.01">
+                        <div class="label-row">
+                            <label for="ext_source_3">External Bureau Score 3 (0.0 to 1.0)</label>
+                            <span class="hint">EXT_SOURCE_3</span>
+                        </div>
+                        <input type="number" id="ext_source_3" name="ext_source_3" value="0.52" min="0" max="1" step="0.01">
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Evaluate Credit Application</button>
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit">
+                    Evaluate Loan Application & Generate SHAP Reasons &rarr;
+                </button>
             </form>
         </div>
 
-        <div class="meta-links">
-            <a href="/docs" target="_blank">Swagger OpenAPI Docs</a> &bull;
-            <a href="/health" target="_blank">Health Status</a>
-        </div>
+        <!-- Footer Meta -->
+        <footer class="footer-meta">
+            <a href="/docs" target="_blank">📖 Interactive OpenAPI Docs</a>
+            <a href="/health" target="_blank">🩺 Health Probe</a>
+            <a href="https://github.com/kotharushikesh-ml/credit-risk-default-prediction" target="_blank">💻 GitHub Repository</a>
+        </footer>
     </div>
+
+    <script>
+        function updateRatios() {
+            const income = parseFloat(document.getElementById('income').value) || 1;
+            const credit = parseFloat(document.getElementById('credit').value) || 0;
+            const annuity = parseFloat(document.getElementById('annuity').value) || 0;
+
+            const creditIncome = (credit / income).toFixed(2);
+            const dti = ((annuity / income) * 100).toFixed(1);
+            const annuityCredit = ((annuity / (credit || 1)) * 100).toFixed(1);
+
+            document.getElementById('ratioCreditIncome').innerText = creditIncome + 'x';
+            document.getElementById('ratioDTI').innerText = dti + '%';
+            document.getElementById('ratioAnnuityCredit').innerText = annuityCredit + '%';
+        }
+
+        function loadProfile(type) {
+            if (type === 'prime') {
+                document.getElementById('income').value = '250000';
+                document.getElementById('credit').value = '350000';
+                document.getElementById('annuity').value = '17500';
+                document.getElementById('goods_price').value = '350000';
+                document.getElementById('age_years').value = '43';
+                document.getElementById('employed_years').value = '8.0';
+                document.getElementById('education').value = 'Higher education';
+                document.getElementById('income_type').value = 'Commercial associate';
+                document.getElementById('ext_source_2').value = '0.72';
+                document.getElementById('ext_source_3').value = '0.68';
+            } else if (type === 'nearprime') {
+                document.getElementById('income').value = '140000';
+                document.getElementById('credit').value = '420000';
+                document.getElementById('annuity').value = '21000';
+                document.getElementById('goods_price').value = '380000';
+                document.getElementById('age_years').value = '34';
+                document.getElementById('employed_years').value = '3.5';
+                document.getElementById('education').value = 'Secondary / secondary special';
+                document.getElementById('income_type').value = 'Working';
+                document.getElementById('ext_source_2').value = '0.48';
+                document.getElementById('ext_source_3').value = '0.45';
+            } else if (type === 'subprime') {
+                document.getElementById('income').value = '65000';
+                document.getElementById('credit').value = '750000';
+                document.getElementById('annuity').value = '48000';
+                document.getElementById('goods_price').value = '700000';
+                document.getElementById('age_years').value = '23';
+                document.getElementById('employed_years').value = '0.6';
+                document.getElementById('education').value = 'Secondary / secondary special';
+                document.getElementById('income_type').value = 'Working';
+                document.getElementById('ext_source_2').value = '0.14';
+                document.getElementById('ext_source_3').value = '0.11';
+            }
+            updateRatios();
+        }
+
+        // Initialize on load
+        updateRatios();
+    </script>
 </body>
 </html>

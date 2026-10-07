@@ -1,3 +1,4 @@
+from typing import Generator
 import pytest
 import pandas as pd
 from fastapi.testclient import TestClient
@@ -7,7 +8,7 @@ from app import app
 
 
 @pytest.fixture
-def client():
+def client() -> Generator[TestClient, None, None]:
     with TestClient(app) as c:
         yield c
 
@@ -37,7 +38,7 @@ def test_feature_ratios_calculation():
     assert round(enriched["AGE_YEARS"].iloc[0], 1) == 40.0
 
 
-def test_api_health(client):
+def test_api_health(client: TestClient):
     """Verify FastAPI /health endpoint returns HTTP 200 and healthy status."""
     response = client.get("/health")
     assert response.status_code == 200
@@ -46,14 +47,14 @@ def test_api_health(client):
     assert data["service"] == "credit-risk-default-scoring"
 
 
-def test_index_page_loads(client):
+def test_index_page_loads(client: TestClient):
     """Verify GET / renders the HTML underwriting interface successfully."""
     response = client.get("/")
     assert response.status_code == 200
-    assert "Credit Default Risk Assessment" in response.text
+    assert "AI Credit Underwriting Engine" in response.text
 
 
-def test_api_predict_flow(client):
+def test_api_predict_flow(client: TestClient):
     """Verify FastAPI /predict endpoint accepts loan payload and produces calibrated PD and SHAP reasons."""
     payload = {
         "AMT_INCOME_TOTAL": 200000.0,

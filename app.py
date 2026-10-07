@@ -1,6 +1,6 @@
 import os
-import sys
-from typing import Optional, List, Dict, Any
+from contextlib import asynccontextmanager
+from typing import Optional, List
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
@@ -9,26 +9,29 @@ from pydantic import BaseModel, Field
 from src.pipeline.prediction_pipeline import PredictPipeline
 from src.logger import logging
 
-app = FastAPI(
-    title="Credit Default Risk Scoring API",
-    description="Production-grade ML API for predicting credit default probabilities with SHAP reason codes.",
-    version="1.0.0"
-)
-
-# Initialize templates if directory exists
-templates_dir = "templates"
-templates = Jinja2Templates(directory=templates_dir) if os.path.exists(templates_dir) else None
-
-# Load prediction pipeline once on startup
-pipeline = None
+# Global prediction pipeline
+pipeline: Optional[PredictPipeline] = None
 
 
-@app.on_event("startup")
-def load_model():
+@asynccontextmanager
+async def lifespan(app_instance: FastAPI):
+    """Modern FastAPI lifespan context manager for startup and shutdown events."""
     global pipeline
     logging.info("Initializing prediction pipeline on server startup...")
     pipeline = PredictPipeline()
     logging.info("Prediction pipeline loaded successfully.")
+    yield
+
+
+app = FastAPI(
+    title="Credit Default Risk Scoring API",
+    description="Production-grade ML API for predicting credit default probabilities with SHAP reason codes.",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Initialize templates
+templates = Jinja2Templates(directory="templates")
 
 
 class LoanApplicationRequest(BaseModel):
@@ -70,7 +73,7 @@ class CreditPredictionResponse(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 def index_page(request: Request):
     """Renders the applicant evaluation form."""
-    if templates and os.path.exists("templates/index.html") and os.path.getsize("templates/index.html") > 0:
+    if os.path.exists("templates/index.html") and os.path.getsize("templates/index.html") > 0:
         return templates.TemplateResponse(request=request, name="index.html")
     return HTMLResponse("<h2>Credit Risk Default Scoring API is Running.</h2><p>Visit <a href='/docs'>/docs</a> for the interactive OpenAPI documentation.</p>")
 
@@ -134,7 +137,7 @@ def predict_ui(
     }
     result = pipeline.predict(payload)
 
-    if templates and os.path.exists("templates/result.html") and os.path.getsize("templates/result.html") > 0:
+    if os.path.exists("templates/result.html") and os.path.getsize("templates/result.html") > 0:
         return templates.TemplateResponse(
             request=request,
             name="result.html",
