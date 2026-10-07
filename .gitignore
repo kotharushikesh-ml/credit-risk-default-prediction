@@ -1,0 +1,30 @@
+# Large data files
+*.csv
+data/*.csv
+eda_application_train.csv
+
+# Artifacts
+artifacts/data.csv
+artifacts/train.csv
+artifacts/val.csv
+artifacts/test.csv
+artifacts/*.parquet
+
+# Logs
+logs/
+*.log
+
+# Python bytecode & environments
+__pycache__/
+*.py[cod]
+*$py.class
+env1/
+venv/
+.venv/
+env/
+
+# OS and IDE files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
