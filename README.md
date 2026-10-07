@@ -2,6 +2,10 @@
 
 An end-to-end, production-grade Machine Learning system for predicting retail loan default risk (`TARGET = 1`) on the Home Credit application portfolio. The system incorporates credit domain feature engineering, calibrated default probability estimation (PD), validation-tuned operating thresholds, regulatory Tree SHAP reason codes (FCRA/ECOA compliant), and a low-latency FastAPI inference service with Docker containerization.
 
+- **Live Application:** [https://credit-risk-default-prediction-nvel.onrender.com](https://credit-risk-default-prediction-nvel.onrender.com)
+- **Interactive Swagger Docs:** [https://credit-risk-default-prediction-nvel.onrender.com/docs](https://credit-risk-default-prediction-nvel.onrender.com/docs)
+- **Health Probe:** [https://credit-risk-default-prediction-nvel.onrender.com/health](https://credit-risk-default-prediction-nvel.onrender.com/health)
+
 ---
 
 ## 1. System Architecture
