@@ -116,7 +116,7 @@ Ranked from highest risk (Decile 1) to lowest risk (Decile 10):
 ### Local Setup
 ```bash
 # 1. Clone repository
-git clone <REPO_URL>
+git clone https://github.com/kotharushikesh-ml/credit-risk-default-prediction.git
 cd project
 
 # 2. Create virtual environment & activate
