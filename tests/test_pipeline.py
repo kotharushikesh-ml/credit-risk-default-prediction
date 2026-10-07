@@ -46,6 +46,13 @@ def test_api_health(client):
     assert data["service"] == "credit-risk-default-scoring"
 
 
+def test_index_page_loads(client):
+    """Verify GET / renders the HTML underwriting interface successfully."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "Credit Default Risk Assessment" in response.text
+
+
 def test_api_predict_flow(client):
     """Verify FastAPI /predict endpoint accepts loan payload and produces calibrated PD and SHAP reasons."""
     payload = {

@@ -71,7 +71,7 @@ class CreditPredictionResponse(BaseModel):
 def index_page(request: Request):
     """Renders the applicant evaluation form."""
     if templates and os.path.exists("templates/index.html") and os.path.getsize("templates/index.html") > 0:
-        return templates.TemplateResponse("index.html", {"request": request})
+        return templates.TemplateResponse(request=request, name="index.html")
     return HTMLResponse("<h2>Credit Risk Default Scoring API is Running.</h2><p>Visit <a href='/docs'>/docs</a> for the interactive OpenAPI documentation.</p>")
 
 
@@ -135,11 +135,14 @@ def predict_ui(
     result = pipeline.predict(payload)
 
     if templates and os.path.exists("templates/result.html") and os.path.getsize("templates/result.html") > 0:
-        return templates.TemplateResponse("result.html", {
-            "request": request,
-            "result": result,
-            "inputs": payload
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="result.html",
+            context={
+                "result": result,
+                "inputs": payload
+            }
+        )
     return JSONResponse(content=result)
 
 
