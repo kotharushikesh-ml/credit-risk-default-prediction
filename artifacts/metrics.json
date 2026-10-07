@@ -1,0 +1,312 @@
+{
+    "baseline_logistic_regression": {
+        "roc_auc": 0.75,
+        "gini": 0.4999,
+        "ks_statistic": 0.3787,
+        "brier_score": 0.0686,
+        "threshold": 0.16,
+        "accuracy": 0.858,
+        "precision": 0.2476,
+        "recall": 0.3722,
+        "f1": 0.2974,
+        "confusion_matrix": [
+            [
+                38191,
+                4212
+            ],
+            [
+                2338,
+                1386
+            ]
+        ],
+        "overall_bad_rate": 0.0807,
+        "total_samples": 46127,
+        "decile_table": [
+            {
+                "decile": 1,
+                "count": 4613,
+                "bads": 1214,
+                "goods": 3399,
+                "bad_rate": 0.2632,
+                "cum_bad_rate": 0.2632,
+                "bad_capture_rate": 0.326,
+                "cum_bad_capture_rate": 0.326,
+                "lift": 3.26,
+                "min_prob": 0.1763,
+                "max_prob": 0.7536
+            },
+            {
+                "decile": 2,
+                "count": 4613,
+                "bads": 647,
+                "goods": 3966,
+                "bad_rate": 0.1403,
+                "cum_bad_rate": 0.2017,
+                "bad_capture_rate": 0.1737,
+                "cum_bad_capture_rate": 0.4997,
+                "lift": 1.74,
+                "min_prob": 0.1193,
+                "max_prob": 0.1763
+            },
+            {
+                "decile": 3,
+                "count": 4612,
+                "bads": 537,
+                "goods": 4075,
+                "bad_rate": 0.1164,
+                "cum_bad_rate": 0.1733,
+                "bad_capture_rate": 0.1442,
+                "cum_bad_capture_rate": 0.6439,
+                "lift": 1.44,
+                "min_prob": 0.0896,
+                "max_prob": 0.1193
+            },
+            {
+                "decile": 4,
+                "count": 4613,
+                "bads": 358,
+                "goods": 4255,
+                "bad_rate": 0.0776,
+                "cum_bad_rate": 0.1494,
+                "bad_capture_rate": 0.0961,
+                "cum_bad_capture_rate": 0.7401,
+                "lift": 0.96,
+                "min_prob": 0.07,
+                "max_prob": 0.0896
+            },
+            {
+                "decile": 5,
+                "count": 4613,
+                "bads": 290,
+                "goods": 4323,
+                "bad_rate": 0.0629,
+                "cum_bad_rate": 0.1321,
+                "bad_capture_rate": 0.0779,
+                "cum_bad_capture_rate": 0.8179,
+                "lift": 0.78,
+                "min_prob": 0.0554,
+                "max_prob": 0.07
+            },
+            {
+                "decile": 6,
+                "count": 4612,
+                "bads": 219,
+                "goods": 4393,
+                "bad_rate": 0.0475,
+                "cum_bad_rate": 0.118,
+                "bad_capture_rate": 0.0588,
+                "cum_bad_capture_rate": 0.8767,
+                "lift": 0.59,
+                "min_prob": 0.0442,
+                "max_prob": 0.0554
+            },
+            {
+                "decile": 7,
+                "count": 4613,
+                "bads": 150,
+                "goods": 4463,
+                "bad_rate": 0.0325,
+                "cum_bad_rate": 0.1058,
+                "bad_capture_rate": 0.0403,
+                "cum_bad_capture_rate": 0.917,
+                "lift": 0.4,
+                "min_prob": 0.0349,
+                "max_prob": 0.0442
+            },
+            {
+                "decile": 8,
+                "count": 4612,
+                "bads": 132,
+                "goods": 4480,
+                "bad_rate": 0.0286,
+                "cum_bad_rate": 0.0961,
+                "bad_capture_rate": 0.0354,
+                "cum_bad_capture_rate": 0.9525,
+                "lift": 0.35,
+                "min_prob": 0.0267,
+                "max_prob": 0.0349
+            },
+            {
+                "decile": 9,
+                "count": 4613,
+                "bads": 110,
+                "goods": 4503,
+                "bad_rate": 0.0238,
+                "cum_bad_rate": 0.0881,
+                "bad_capture_rate": 0.0295,
+                "cum_bad_capture_rate": 0.982,
+                "lift": 0.3,
+                "min_prob": 0.0184,
+                "max_prob": 0.0267
+            },
+            {
+                "decile": 10,
+                "count": 4613,
+                "bads": 67,
+                "goods": 4546,
+                "bad_rate": 0.0145,
+                "cum_bad_rate": 0.0807,
+                "bad_capture_rate": 0.018,
+                "cum_bad_capture_rate": 1.0,
+                "lift": 0.18,
+                "min_prob": 0.0,
+                "max_prob": 0.0184
+            }
+        ]
+    },
+    "final_xgboost_model": {
+        "roc_auc": 0.7591,
+        "gini": 0.5183,
+        "ks_statistic": 0.3926,
+        "brier_score": 0.0678,
+        "threshold": 0.14,
+        "accuracy": 0.8424,
+        "precision": 0.2388,
+        "recall": 0.435,
+        "f1": 0.3083,
+        "confusion_matrix": [
+            [
+                37238,
+                5165
+            ],
+            [
+                2104,
+                1620
+            ]
+        ],
+        "overall_bad_rate": 0.0807,
+        "total_samples": 46127,
+        "decile_table": [
+            {
+                "decile": 1,
+                "count": 4613,
+                "bads": 1267,
+                "goods": 3346,
+                "bad_rate": 0.2747,
+                "cum_bad_rate": 0.2747,
+                "bad_capture_rate": 0.3402,
+                "cum_bad_capture_rate": 0.3402,
+                "lift": 3.4,
+                "min_prob": 0.1701,
+                "max_prob": 0.6411
+            },
+            {
+                "decile": 2,
+                "count": 4613,
+                "bads": 681,
+                "goods": 3932,
+                "bad_rate": 0.1476,
+                "cum_bad_rate": 0.2112,
+                "bad_capture_rate": 0.1829,
+                "cum_bad_capture_rate": 0.5231,
+                "lift": 1.83,
+                "min_prob": 0.1175,
+                "max_prob": 0.17
+            },
+            {
+                "decile": 3,
+                "count": 4612,
+                "bads": 499,
+                "goods": 4113,
+                "bad_rate": 0.1082,
+                "cum_bad_rate": 0.1768,
+                "bad_capture_rate": 0.134,
+                "cum_bad_capture_rate": 0.6571,
+                "lift": 1.34,
+                "min_prob": 0.0895,
+                "max_prob": 0.1175
+            },
+            {
+                "decile": 4,
+                "count": 4613,
+                "bads": 358,
+                "goods": 4255,
+                "bad_rate": 0.0776,
+                "cum_bad_rate": 0.152,
+                "bad_capture_rate": 0.0961,
+                "cum_bad_capture_rate": 0.7532,
+                "lift": 0.96,
+                "min_prob": 0.0706,
+                "max_prob": 0.0895
+            },
+            {
+                "decile": 5,
+                "count": 4613,
+                "bads": 253,
+                "goods": 4360,
+                "bad_rate": 0.0548,
+                "cum_bad_rate": 0.1326,
+                "bad_capture_rate": 0.0679,
+                "cum_bad_capture_rate": 0.8212,
+                "lift": 0.68,
+                "min_prob": 0.057,
+                "max_prob": 0.0706
+            },
+            {
+                "decile": 6,
+                "count": 4612,
+                "bads": 217,
+                "goods": 4395,
+                "bad_rate": 0.0471,
+                "cum_bad_rate": 0.1183,
+                "bad_capture_rate": 0.0583,
+                "cum_bad_capture_rate": 0.8794,
+                "lift": 0.58,
+                "min_prob": 0.0465,
+                "max_prob": 0.057
+            },
+            {
+                "decile": 7,
+                "count": 4613,
+                "bads": 162,
+                "goods": 4451,
+                "bad_rate": 0.0351,
+                "cum_bad_rate": 0.1064,
+                "bad_capture_rate": 0.0435,
+                "cum_bad_capture_rate": 0.9229,
+                "lift": 0.43,
+                "min_prob": 0.0378,
+                "max_prob": 0.0464
+            },
+            {
+                "decile": 8,
+                "count": 4612,
+                "bads": 133,
+                "goods": 4479,
+                "bad_rate": 0.0288,
+                "cum_bad_rate": 0.0967,
+                "bad_capture_rate": 0.0357,
+                "cum_bad_capture_rate": 0.9586,
+                "lift": 0.36,
+                "min_prob": 0.0304,
+                "max_prob": 0.0378
+            },
+            {
+                "decile": 9,
+                "count": 4613,
+                "bads": 98,
+                "goods": 4515,
+                "bad_rate": 0.0212,
+                "cum_bad_rate": 0.0884,
+                "bad_capture_rate": 0.0263,
+                "cum_bad_capture_rate": 0.985,
+                "lift": 0.26,
+                "min_prob": 0.023,
+                "max_prob": 0.0304
+            },
+            {
+                "decile": 10,
+                "count": 4613,
+                "bads": 56,
+                "goods": 4557,
+                "bad_rate": 0.0121,
+                "cum_bad_rate": 0.0807,
+                "bad_capture_rate": 0.015,
+                "cum_bad_capture_rate": 1.0,
+                "lift": 0.15,
+                "min_prob": 0.0073,
+                "max_prob": 0.023
+            }
+        ]
+    }
+}

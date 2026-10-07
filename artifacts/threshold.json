@@ -1,0 +1,5 @@
+{
+    "threshold": 0.14,
+    "validation_f1": 0.3116,
+    "evaluation_metric": "f1_score"
+}
